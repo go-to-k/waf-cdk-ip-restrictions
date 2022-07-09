@@ -1,14 +1,38 @@
-# Welcome to your CDK TypeScript project
+# waf-cdk-ip-restrictions
 
-This is a blank project for CDK development with TypeScript.
+## What
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+A CDK stack that creates WAF (WebACL) with flexible IP restrictions.
 
-## Useful commands
+With the following configuration file(IP whitelist), you can deploy without change CloudFormation templates when you increase or decrease IP addresses.
 
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `cdk deploy`      deploy this stack to your default AWS account/region
-* `cdk diff`        compare deployed stack with current state
-* `cdk synth`       emits the synthesized CloudFormation template
+- iplist.txt
+
+```
+x.x.x.1/32
+x.x.x.2/32
+```
+
+## How to
+
+### IP Whitelist
+
+Change the IP Whitelist: [iplist.txt](./iplist.txt)
+
+### Install
+
+```sh
+npm i
+```
+
+### Deploy
+
+```sh
+npx cdk deploy
+```
+
+### Destroy
+
+```sh
+npx cdk destroy
+```
