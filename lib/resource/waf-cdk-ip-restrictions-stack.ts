@@ -6,19 +6,17 @@ import { WafRegionValidator } from "../validator/waf-region-validator";
 
 export class WafCdkIpRestrictionsStack extends Stack {
   scopeType: string;
-  region: string;
   ipList: string[];
 
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    this.init(props);
+    this.init();
     this.create();
   }
 
-  private init(props?: StackProps) {
+  private init() {
     this.scopeType = this.node.tryGetContext("scopeType") ?? "";
-    this.region = props?.env?.region ?? "";
     this.ipList = getIPList();
 
     const wafRegionValidator = new WafRegionValidator(this.scopeType, this.region);
