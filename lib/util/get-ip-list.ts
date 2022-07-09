@@ -12,7 +12,6 @@ export const getIPList = (): string[] => {
     const trimmedLine = line
       .replace(/ /g, "")
       .replace(/\t/g, "")
-      .replace(/\n/g, "")
       .replace(/^([^#]+)#.*$/g, "$1");
 
     const commentOutPattern = /^#/g;
