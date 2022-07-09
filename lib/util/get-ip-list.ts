@@ -6,7 +6,7 @@ export const getIPList = (): string[] => {
   const ipList: string[] = [];
 
   const ipListFile = fs.readFileSync(ipListFilePath, "utf8");
-  const lines = ipListFile.toString().split("\r\n");
+  const lines = ipListFile.toString().split("\n");
 
   for (const line of lines) {
     // TODO: check CIDR format or not (/32, /16, etc...)
@@ -16,12 +16,11 @@ export const getIPList = (): string[] => {
       .replace(/\n/g, "")
       .replace(/^([^#]+)#.*$/g, "$1");
 
-    // TODO: check empty lines whether or not (need \n handlings??)
     const pattern = /^#/g;
     const result = trimmedLine.match(pattern);
 
     if (trimmedLine.length && !result) {
-      ipList.push(line);
+      ipList.push(trimmedLine);
     }
   }
 
