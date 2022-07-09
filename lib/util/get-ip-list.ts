@@ -9,19 +9,24 @@ export const getIPList = (): string[] => {
   const lines = ipListFile.toString().split("\n");
 
   for (const line of lines) {
-    // TODO: check CIDR format or not (/32, /16, etc...)
     const trimmedLine = line
       .replace(/ /g, "")
       .replace(/\t/g, "")
       .replace(/\n/g, "")
       .replace(/^([^#]+)#.*$/g, "$1");
 
-    const pattern = /^#/g;
-    const result = trimmedLine.match(pattern);
+    const commentOutPattern = /^#/g;
+    const commentOutResult = trimmedLine.match(commentOutPattern);
+    if (!trimmedLine.length || commentOutResult) continue;
 
-    if (trimmedLine.length && !result) {
-      ipList.push(trimmedLine);
+    const cidrFormatPattern =
+      /^(([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}[1-9]?([0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\/([1-2]?[0-9]|3[0-2])$/g;
+    const cidrFormatResult = trimmedLine.match(cidrFormatPattern);
+    if (!cidrFormatResult) {
+      throw new Error(`IP CIDR Format is invalid: ${trimmedLine}`);
     }
+
+    ipList.push(trimmedLine);
   }
 
   return ipList;
