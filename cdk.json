@@ -28,6 +28,9 @@
     "@aws-cdk/core:validateSnapshotRemovalPolicy": true,
     "@aws-cdk/aws-codepipeline:crossAccountKeyAliasStackSafeResourceName": true,
     "@aws-cdk/aws-s3:createDefaultLoggingPolicy": true,
-    "@aws-cdk/core:target-partitions": ["aws", "aws-cn"]
+    "@aws-cdk/core:target-partitions": ["aws", "aws-cn"],
+
+    "region": "us-east-1",
+    "scopeType": "CLOUDFRONT"
   }
 }
