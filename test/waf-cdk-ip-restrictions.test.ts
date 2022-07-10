@@ -100,39 +100,55 @@ describe("Validation Tests", () => {
 });
 
 describe("IP List Tests", () => {
-  test("iplist-1 = Success", () => {
-    const ipListFilePath = "./test/iplists/iplist-1.txt";
+  test("iplist-empty-correct = Success", () => {
+    const ipListFilePath = "./test/iplists/iplist-empty-correct.txt";
     expect(getIPList(ipListFilePath)).toEqual([]);
   });
 
-  test("iplist-2 = Error", () => {
-    const ipListFilePath = "./test/iplists/iplist-2.txt";
+  test("iplist-cidr-incorrect = Error", () => {
+    const ipListFilePath = "./test/iplists/iplist-cidr-incorrect.txt";
     expect(() => {
       getIPList(ipListFilePath);
     }).toThrow(/IP CIDR Format is invalid:/);
   });
 
-  test("iplist-3 = Error", () => {
-    const ipListFilePath = "./test/iplists/iplist-3.txt";
+  test("iplist-cidr-correct = Error", () => {
+    const ipListFilePath = "./test/iplists/iplist-cidr-correct.txt";
+    expect(getIPList(ipListFilePath)).toEqual(["0.0.0.1/0", "0.0.0.2/32"]);
+  });
+
+  test("iplist-address-incorrect = Error", () => {
+    const ipListFilePath = "./test/iplists/iplist-address-incorrect.txt";
     expect(() => {
       getIPList(ipListFilePath);
     }).toThrow(/IP CIDR Format is invalid:/);
   });
 
-  test("iplist-4 = Success", () => {
-    const ipListFilePath = "./test/iplists/iplist-4.txt";
-    expect(getIPList(ipListFilePath)).toEqual(["0.0.0.1/16", "0.0.0.2/32", "0.0.0.3/24"]);
+  test("iplist-address-correct = Error", () => {
+    const ipListFilePath = "./test/iplists/iplist-address-correct.txt";
+    expect(getIPList(ipListFilePath)).toEqual([
+      "0.0.0.1/32",
+      "255.0.0.2/32",
+      "0.255.0.3/32",
+      "0.0.255.4/32",
+      "0.0.0.255/32",
+    ]);
   });
 
-  test("iplist-5 = Error", () => {
-    const ipListFilePath = "./test/iplists/iplist-5.txt";
+  test("iplist-comments-correct = Success", () => {
+    const ipListFilePath = "./test/iplists/iplist-comments-correct.txt";
+    expect(getIPList(ipListFilePath)).toEqual(["0.0.0.1/16", "0.0.0.2/32"]);
+  });
+
+  test("iplist-alphabet-incorrect = Error", () => {
+    const ipListFilePath = "./test/iplists/iplist-alphabet-incorrect.txt";
     expect(() => {
       getIPList(ipListFilePath);
     }).toThrow(/IP CIDR Format is invalid:/);
   });
 
-  test("iplist-6 = Error", () => {
-    const ipListFilePath = "./test/iplists/iplist-6.txt";
+  test("iplist-mix-incorrect = Error", () => {
+    const ipListFilePath = "./test/iplists/iplist-mix-incorrect.txt";
     expect(() => {
       getIPList(ipListFilePath);
     }).toThrow(/IP CIDR Format is invalid:/);
