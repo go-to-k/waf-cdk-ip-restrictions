@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot Tests Snapshot test 1`] = `
+Object {
+  "Parameters": Object {
+    "BootstrapVersion": Object {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": Object {
+    "WebAcl": Object {
+      "Properties": Object {
+        "DefaultAction": Object {
+          "Block": Object {},
+        },
+        "Name": "WebAcl",
+        "Rules": Array [
+          Object {
+            "Action": Object {
+              "Allow": Object {},
+            },
+            "Name": "WhiteListIPSet-Rule",
+            "Priority": 0,
+            "Statement": Object {
+              "IPSetReferenceStatement": Object {
+                "Arn": Object {
+                  "Fn::GetAtt": Array [
+                    "WhiteListIPSet",
+                    "Arn",
+                  ],
+                },
+              },
+            },
+            "VisibilityConfig": Object {
+              "CloudWatchMetricsEnabled": true,
+              "MetricName": "WhiteListIPSet-Rule",
+              "SampledRequestsEnabled": true,
+            },
+          },
+        ],
+        "Scope": "CLOUDFRONT",
+        "VisibilityConfig": Object {
+          "CloudWatchMetricsEnabled": true,
+          "MetricName": "WebAcl",
+          "SampledRequestsEnabled": true,
+        },
+      },
+      "Type": "AWS::WAFv2::WebACL",
+    },
+    "WhiteListIPSet": Object {
+      "Properties": Object {
+        "Addresses": Array [
+          "0.0.0.1/32",
+          "0.0.0.2/32",
+        ],
+        "IPAddressVersion": "IPV4",
+        "Name": "WhiteListIPSet",
+        "Scope": "CLOUDFRONT",
+      },
+      "Type": "AWS::WAFv2::IPSet",
+    },
+  },
+  "Rules": Object {
+    "CheckBootstrapVersion": Object {
+      "Assertions": Array [
+        Object {
+          "Assert": Object {
+            "Fn::Not": Array [
+              Object {
+                "Fn::Contains": Array [
+                  Array [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  Object {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
