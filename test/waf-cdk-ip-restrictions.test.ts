@@ -123,4 +123,18 @@ describe("IP List Tests", () => {
     const ipListFilePath = "./test/iplists/iplist-4.txt";
     expect(getIPList(ipListFilePath)).toEqual(["0.0.0.1/16", "0.0.0.2/32", "0.0.0.3/24"]);
   });
+
+  test("iplist-5 = Error", () => {
+    const ipListFilePath = "./test/iplists/iplist-5.txt";
+    expect(() => {
+      getIPList(ipListFilePath);
+    }).toThrowError(/IP CIDR Format is invalid:/);
+  });
+
+  test("iplist-6 = Error", () => {
+    const ipListFilePath = "./test/iplists/iplist-6.txt";
+    expect(() => {
+      getIPList(ipListFilePath);
+    }).toThrowError(/IP CIDR Format is invalid:/);
+  });
 });
