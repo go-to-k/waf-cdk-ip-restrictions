@@ -4,6 +4,8 @@ import * as wafv2 from "aws-cdk-lib/aws-wafv2";
 import { getIPList } from "../util/get-ip-list";
 import { WafRegionValidator } from "../validator/waf-region-validator";
 
+const ipListFilePath = "./iplist.txt";
+
 export class WafCdkIpRestrictionsStack extends Stack {
   scopeType: string;
   ipList: string[];
@@ -17,7 +19,7 @@ export class WafCdkIpRestrictionsStack extends Stack {
 
   private init() {
     this.scopeType = this.node.tryGetContext("scopeType") ?? "";
-    this.ipList = getIPList();
+    this.ipList = getIPList(ipListFilePath);
 
     const wafRegionValidator = new WafRegionValidator(this.scopeType, this.region);
     this.node.addValidation(wafRegionValidator);

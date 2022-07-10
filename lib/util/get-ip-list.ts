@@ -1,8 +1,6 @@
 import * as fs from "fs";
 
-const ipListFilePath = "./iplist.txt";
-
-export const getIPList = (): string[] => {
+export const getIPList = (ipListFilePath: string): string[] => {
   const ipList: string[] = [];
 
   const ipListFile = fs.readFileSync(ipListFilePath, "utf8");
