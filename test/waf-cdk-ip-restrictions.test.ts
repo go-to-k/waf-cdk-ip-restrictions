@@ -2,6 +2,7 @@ import * as cdk from "aws-cdk-lib";
 import { Match, Template } from "aws-cdk-lib/assertions";
 import { WafCdkIpRestrictionsStack } from "../lib/resource/waf-cdk-ip-restrictions-stack";
 import _cdkJsonRaw from "../cdk.json";
+import { getIPList } from "../lib/util/get-ip-list";
 
 export type CdkJson = typeof _cdkJsonRaw;
 
@@ -98,4 +99,28 @@ describe("Validation Tests", () => {
   });
 });
 
-describe("IP List Tests", () => {});
+describe("IP List Tests", () => {
+  test("iplist-1 = Success", () => {
+    const ipListFilePath = "./test/iplists/iplist-1.txt";
+    expect(getIPList(ipListFilePath)).toEqual([]);
+  });
+
+  test("iplist-2 = Error", () => {
+    const ipListFilePath = "./test/iplists/iplist-2.txt";
+    expect(() => {
+      getIPList(ipListFilePath);
+    }).toThrowError(/IP CIDR Format is invalid:/);
+  });
+
+  test("iplist-3 = Error", () => {
+    const ipListFilePath = "./test/iplists/iplist-3.txt";
+    expect(() => {
+      getIPList(ipListFilePath);
+    }).toThrowError(/IP CIDR Format is invalid:/);
+  });
+
+  test("iplist-4 = Success", () => {
+    const ipListFilePath = "./test/iplists/iplist-4.txt";
+    expect(getIPList(ipListFilePath)).toEqual(["0.0.0.1/16", "0.0.0.2/32", "0.0.0.3/24"]);
+  });
+});
