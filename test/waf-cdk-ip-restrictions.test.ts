@@ -6,11 +6,11 @@ import { getIPList } from "../lib/util/get-ip-list";
 
 export type CdkJson = typeof _cdkJsonRaw;
 
-const getTemplate = (region?: string, scopeType?: string): cdk.assertions.Template => {
+const getTemplate = (scopeType?: string, region?: string): cdk.assertions.Template => {
   const _cdkJson: CdkJson = _cdkJsonRaw;
 
-  if (region !== undefined) _cdkJson.context.region = region;
   if (scopeType !== undefined) _cdkJson.context.scopeType = scopeType;
+  if (region !== undefined) _cdkJson.context.region = region;
 
   const app = new cdk.App({
     context: _cdkJson.context,
@@ -58,44 +58,44 @@ describe("Fine-grained Assertions Tests", () => {
 });
 
 describe("Validation Tests", () => {
-  test("SCOPE: CLOUDFRONT - REGION: ap-northeast-1 = Error", () => {
-    const region = "ap-northeast-1";
+  test("ScopeType: CLOUDFRONT - Region: ap-northeast-1 = Error", () => {
     const scopeType = "CLOUDFRONT";
-    expect(() => {
-      const template = getTemplate(region, scopeType);
-    }).toThrowError(/Region must be us-east-1 when CLOUDFRONT./);
-  });
-
-  test("SCOPE: CLOUDFRONT - REGION: us-east-1 = Success", () => {
-    const region = "us-east-1";
-    const scopeType = "CLOUDFRONT";
-    expect(() => {
-      const template = getTemplate(region, scopeType);
-    }).not.toThrow(Error);
-  });
-
-  test("SCOPE: REGIONAL - REGION: ap-northeast-1 = Success", () => {
     const region = "ap-northeast-1";
-    const scopeType = "REGIONAL";
     expect(() => {
-      const template = getTemplate(region, scopeType);
+      getTemplate(scopeType, region);
+    }).toThrow(/Region must be us-east-1 when CLOUDFRONT./);
+  });
+
+  test("ScopeType: CLOUDFRONT - Region: us-east-1 = Success", () => {
+    const scopeType = "CLOUDFRONT";
+    const region = "us-east-1";
+    expect(() => {
+      getTemplate(scopeType, region);
     }).not.toThrow(Error);
   });
 
-  test("SCOPE: REGIONAL - REGION: us-east-1 = Success", () => {
-    const region = "us-east-1";
+  test("ScopeType: REGIONAL - Region: ap-northeast-1 = Success", () => {
     const scopeType = "REGIONAL";
+    const region = "ap-northeast-1";
     expect(() => {
-      const template = getTemplate(region, scopeType);
+      getTemplate(scopeType, region);
     }).not.toThrow(Error);
   });
 
-  test("SCOPE: INVALID - REGION: us-east-1 = Error", () => {
+  test("ScopeType: REGIONAL - Region: us-east-1 = Success", () => {
+    const scopeType = "REGIONAL";
     const region = "us-east-1";
+    expect(() => {
+      getTemplate(scopeType, region);
+    }).not.toThrow(Error);
+  });
+
+  test("ScopeType: INVALID - Region: us-east-1 = Error", () => {
     const scopeType = "INVALID";
+    const region = "us-east-1";
     expect(() => {
-      const template = getTemplate(region, scopeType);
-    }).toThrowError(/Scope must be CLOUDFRONT or REGIONAL./);
+      getTemplate(scopeType, region);
+    }).toThrow(/Scope must be CLOUDFRONT or REGIONAL./);
   });
 });
 
@@ -109,14 +109,14 @@ describe("IP List Tests", () => {
     const ipListFilePath = "./test/iplists/iplist-2.txt";
     expect(() => {
       getIPList(ipListFilePath);
-    }).toThrowError(/IP CIDR Format is invalid:/);
+    }).toThrow(/IP CIDR Format is invalid:/);
   });
 
   test("iplist-3 = Error", () => {
     const ipListFilePath = "./test/iplists/iplist-3.txt";
     expect(() => {
       getIPList(ipListFilePath);
-    }).toThrowError(/IP CIDR Format is invalid:/);
+    }).toThrow(/IP CIDR Format is invalid:/);
   });
 
   test("iplist-4 = Success", () => {
@@ -128,13 +128,13 @@ describe("IP List Tests", () => {
     const ipListFilePath = "./test/iplists/iplist-5.txt";
     expect(() => {
       getIPList(ipListFilePath);
-    }).toThrowError(/IP CIDR Format is invalid:/);
+    }).toThrow(/IP CIDR Format is invalid:/);
   });
 
   test("iplist-6 = Error", () => {
     const ipListFilePath = "./test/iplists/iplist-6.txt";
     expect(() => {
       getIPList(ipListFilePath);
-    }).toThrowError(/IP CIDR Format is invalid:/);
+    }).toThrow(/IP CIDR Format is invalid:/);
   });
 });
