@@ -7,8 +7,8 @@ import { WafRegionValidator } from "../validator/waf-region-validator";
 const ipListFilePath = "./iplist.txt";
 
 export class WafCdkIpRestrictionsStack extends Stack {
-  scopeType: string;
-  ipList: string[];
+  private scopeType: string;
+  private ipList: string[];
 
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
