@@ -1,8 +1,8 @@
 import { IValidation } from "constructs";
 
 export class WafRegionValidator implements IValidation {
-  scopeType: string;
-  region: string;
+  private scopeType: string;
+  private region: string;
 
   constructor(scopeType: string, region: string) {
     this.scopeType = scopeType;
