@@ -21,8 +21,7 @@ const getTemplate = (scopeType?: string, region?: string): cdk.assertions.Templa
       region: regionContext,
     },
   });
-  const template = Template.fromStack(stack);
-  return template;
+  return Template.fromStack(stack);
 };
 
 describe("Snapshot Tests", () => {
