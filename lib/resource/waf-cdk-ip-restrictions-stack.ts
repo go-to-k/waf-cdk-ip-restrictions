@@ -11,15 +11,15 @@ export class WafCdkIpRestrictionsStack extends Stack {
   private scopeType: string;
   private ipList: string[];
 
-  constructor(scope: Construct, id: string, props?: ConfigStackProps) {
+  constructor(scope: Construct, id: string, props: ConfigStackProps) {
     super(scope, id, props);
 
     this.init(props);
     this.create();
   }
 
-  private init(props?: ConfigStackProps) {
-    this.scopeType = props?.config?.scopeType ?? "";
+  private init(props: ConfigStackProps) {
+    this.scopeType = props.config.scopeType;
     this.ipList = getIPList(ipListFilePath);
 
     const wafRegionValidator = new WafRegionValidator(this.scopeType, this.region);
