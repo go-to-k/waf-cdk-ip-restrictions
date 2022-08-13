@@ -1,26 +1,29 @@
-import * as cdk from "aws-cdk-lib";
+import { App, assertions } from "aws-cdk-lib";
 import { Match, Template } from "aws-cdk-lib/assertions";
+import { ConfigStackProps, configStackProps } from "../lib/config";
 import { WafCdkIpRestrictionsStack } from "../lib/resource/waf-cdk-ip-restrictions-stack";
-import _cdkJsonRaw from "../cdk.json";
 import { getIPList } from "../lib/util/get-ip-list";
 
-export type CdkJson = typeof _cdkJsonRaw;
+const getTemplate = (scopeType?: string, region?: string): assertions.Template => {
+  const testScopeType = scopeType ?? configStackProps?.config?.scopeType ?? "";
+  const testRegion = region ?? configStackProps?.env?.region ?? "";
 
-const getTemplate = (scopeType?: string, region?: string): cdk.assertions.Template => {
-  const _cdkJson: CdkJson = _cdkJsonRaw;
-
-  if (scopeType !== undefined) _cdkJson.context.scopeType = scopeType;
-  if (region !== undefined) _cdkJson.context.region = region;
-
-  const app = new cdk.App({
-    context: _cdkJson.context,
-  });
-  const regionContext = app.node.tryGetContext("region") ?? "";
-  const stack = new WafCdkIpRestrictionsStack(app, "WafCdkIpRestrictionsStack", {
+  const testConfigStackProps: ConfigStackProps = {
     env: {
-      region: regionContext,
+      region: testRegion,
     },
-  });
+    config: {
+      scopeType: testScopeType,
+    },
+  };
+
+  const app = new App();
+  const stack = new WafCdkIpRestrictionsStack(
+    app,
+    "WafCdkIpRestrictionsStack",
+    testConfigStackProps,
+  );
+
   return Template.fromStack(stack);
 };
 
