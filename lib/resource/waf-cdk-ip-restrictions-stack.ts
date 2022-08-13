@@ -1,4 +1,4 @@
-import { Stack, StackProps } from "aws-cdk-lib";
+import { Stack } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { getIPList } from "../util/get-ip-list";
 import { WafRegionValidator } from "../validator/waf-region-validator";
@@ -18,7 +18,7 @@ export class WafCdkIpRestrictionsStack extends Stack {
     this.create();
   }
 
-  private init(props: ConfigStackProps) {
+  private init(props: ConfigStackProps): void {
     this.scopeType = props.config.scopeType;
     this.ipList = getIPList(ipListFilePath);
 
