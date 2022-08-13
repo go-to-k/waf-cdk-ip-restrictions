@@ -5,7 +5,7 @@ export interface Config {
 }
 
 export interface ConfigStackProps extends StackProps {
-  config?: Config;
+  config: Config;
 }
 
 export const configStackProps: ConfigStackProps = {
