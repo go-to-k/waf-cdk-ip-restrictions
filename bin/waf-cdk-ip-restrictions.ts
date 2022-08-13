@@ -1,14 +1,9 @@
 #!/usr/bin/env node
 import "source-map-support/register";
-import * as cdk from "aws-cdk-lib";
+import { App } from "aws-cdk-lib";
 import { WafCdkIpRestrictionsStack } from "../lib/resource/waf-cdk-ip-restrictions-stack";
+import { configStackProps } from "../lib/config";
 
-const app = new cdk.App();
+const app = new App();
 
-const region = app.node.tryGetContext("region") ?? "";
-
-new WafCdkIpRestrictionsStack(app, "WafCdkIpRestrictionsStack", {
-  env: {
-    region: region,
-  },
-});
+new WafCdkIpRestrictionsStack(app, "WafCdkIpRestrictionsStack", configStackProps);
