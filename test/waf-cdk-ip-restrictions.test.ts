@@ -5,8 +5,8 @@ import { WafCdkIpRestrictionsStack } from "../lib/resource/waf-cdk-ip-restrictio
 import { getIPList } from "../lib/util/get-ip-list";
 
 const getTemplate = (scopeType?: string, region?: string): assertions.Template => {
-  const testScopeType = scopeType ?? configStackProps?.config?.scopeType ?? "";
-  const testRegion = region ?? configStackProps?.env?.region ?? "";
+  const testScopeType = scopeType ?? configStackProps.config.scopeType;
+  const testRegion = region ?? configStackProps?.env?.region ?? "ap-northeast-1";
 
   const testConfigStackProps: ConfigStackProps = {
     env: {
