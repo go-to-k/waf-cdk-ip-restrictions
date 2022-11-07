@@ -1,5 +1,7 @@
 # waf-cdk-ip-restrictions
 
+The description in **Japanese** is available on the following blog page. -> [Blog](https://go-to-k.hatenablog.com/entry/waf-cdk-ip-restrictions)
+
 ## What
 
 A CDK stack that creates WAF (WebACL) with flexible IP restrictions.
