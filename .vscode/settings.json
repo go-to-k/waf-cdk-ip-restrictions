@@ -6,5 +6,8 @@
   "editor.codeActionsOnSave": ["source.fixAll.eslint"],
   "search.exclude": {},
   "cSpell.words": ["wafv2", "iplist", "iplists"],
-  "typescript.preferences.importModuleSpecifier": "relative"
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "[ignore]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  }
 }

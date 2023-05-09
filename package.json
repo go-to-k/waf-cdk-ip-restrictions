@@ -1,9 +1,7 @@
 {
   "name": "waf-cdk-ip-restrictions",
   "version": "0.1.0",
-  "bin": {
-    "waf-cdk-ip-restrictions": "bin/waf-cdk-ip-restrictions.js"
-  },
+  "bin": "bin/waf-cdk-ip-restrictions.js",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
@@ -34,5 +32,9 @@
     "aws-cdk-lib": "2.31.0",
     "constructs": "^10.0.0",
     "source-map-support": "^0.5.21"
+  },
+  "volta": {
+    "node": "18.16.0",
+    "yarn": "1.22.17"
   }
 }
